@@ -73,6 +73,7 @@ export async function activate(context: vs.ExtensionContext) {
 	context.subscriptions.push({
 		dispose: () => {
 			server.close();
+			server.closeAllConnections();
 		}
 	});
 
