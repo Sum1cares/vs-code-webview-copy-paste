@@ -9,20 +9,18 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": ["*"],
+  "activationEvents": [
+    "*"
+  ],
   "main": "./out/extension.js",
   "scripts": {
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./"
   },
-  "dependencies": {
-    "express": "^4.19.2"
-  },
   "devDependencies": {
-    "@types/vscode": "^1.87.0",
     "@types/node": "18.x",
-    "typescript": "^5.2.2",
+    "@types/vscode": "^1.87.0",
     "@vscode/test-electron": "^2.3.4",
-    "@types/express": "^4.17.21"
+    "typescript": "^5.2.2"
   }
 }
