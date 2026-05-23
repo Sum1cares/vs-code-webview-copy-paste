@@ -1,5 +1,5 @@
 import * as vs from 'vscode';
-import * as express from 'express';
+import * as http from 'http';
 
 export async function activate(context: vs.ExtensionContext) {
 	await vs.commands.executeCommand("workbench.action.closeAllEditors");
@@ -10,8 +10,7 @@ export async function activate(context: vs.ExtensionContext) {
 
 
 	// Set up a simple HTTP server to serve the app.
-	const app = express()
-	const port = 3000
+	const port = 3000;
 
 	const keypressLogger = `
 		<h2>Keypress Log</h2>
@@ -48,8 +47,9 @@ export async function activate(context: vs.ExtensionContext) {
 		</script>
 	`;
 
-	app.get('/', (_req, res) => {
-		res.send(`
+	const server = http.createServer((_req, res) => {
+		res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+		res.end(`
 			<html>
 			<head>
 			</head>
@@ -63,19 +63,19 @@ export async function activate(context: vs.ExtensionContext) {
 				${keypressLogger}
 			</body>
 			</html>
-			`)
-	})
+			`);
+	});
 
-	const server = app.listen(port, () => {
-		console.log(`Example app listening on port ${port}`)
-	})
+	server.listen(port, () => {
+		console.log(`Example app listening on port ${port}`);
+	});
 
 	context.subscriptions.push({
 		dispose: () => {
 			server.close();
 			server.closeAllConnections();
 		}
-	})
+	});
 
 
 	// Create a webview.
